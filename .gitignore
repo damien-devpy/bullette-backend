@@ -3,3 +3,6 @@
 
 # Env
 *.env
+
+# Bytes files
+*/__pycache__
