@@ -3,7 +3,7 @@ from django.contrib.auth.password_validation import validate_password, Validatio
 from rest_framework import serializers
 
 
-class UserRegistrationSerializer(serializers.ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     password2 = serializers.CharField(max_length=128, write_only=True)
 
     class Meta:
@@ -30,3 +30,13 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user = get_user_model().objects.create_user(**validated_data)
         return user
+
+    def update(self, instance, validated_data):
+        for field in validated_data:
+            if field == 'password':
+                instance.set_password(validated_data.get(field))
+            else:
+                setattr(instance, field, validated_data.get(field))
+        instance.save()
+
+        return instance

@@ -1,8 +1,1 @@
-# Pycharm
-*.idea/*
-
-# Env
 *.env
-
-# Bytes files
-*/__pycache__

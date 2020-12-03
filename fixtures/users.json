@@ -1,0 +1,78 @@
+[
+  {
+    "model": "users.user",
+    "pk": 1,
+    "fields": {
+      "password": "pbkdf2_sha256$216000$15HYETZgw5so$apq/n/tHbwDIzEW+PsVWUwLl6DcwNzIC7fGK/DCMmv4=",
+      "last_login": null,
+      "is_superuser": false,
+      "first_name": "",
+      "last_name": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2020-12-02T09:45:28.782Z",
+      "username": "username1",
+      "email": "username1@testmail.com",
+      "is_citizen": false,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 2,
+    "fields": {
+      "password": "pbkdf2_sha256$216000$cnAoySn87CwR$CF61528SrXbvxaYgJpj0vZEh/zEUGOL9SDAmFAmcC2M=",
+      "last_login": null,
+      "is_superuser": false,
+      "first_name": "",
+      "last_name": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2020-12-02T09:45:28.917Z",
+      "username": "username2",
+      "email": "username2@testmail.com",
+      "is_citizen": false,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 3,
+    "fields": {
+      "password": "pbkdf2_sha256$216000$SeorVVyd4chj$1xpppyDi5HgAHDtopEJZepWXytZBGuKxi7bY685SD04=",
+      "last_login": null,
+      "is_superuser": false,
+      "first_name": "",
+      "last_name": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2020-12-02T09:45:29.043Z",
+      "username": "username3",
+      "email": "username3@testmail.com",
+      "is_citizen": false,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 4,
+    "fields": {
+      "password": "pbkdf2_sha256$216000$R2cobKRFmUXV$VhGMkmVZx+y0NFTBAEcKjMIsTGdZMp70VwWLbC8zkPw=",
+      "last_login": null,
+      "is_superuser": false,
+      "first_name": "",
+      "last_name": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2020-12-02T09:45:29.166Z",
+      "username": "username4",
+      "email": "username4@testmail.com",
+      "is_citizen": false,
+      "groups": [],
+      "user_permissions": []
+    }
+  }
+]
