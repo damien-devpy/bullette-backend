@@ -29,8 +29,7 @@ class TestRegistrationView(TestCase):
                      "is_citizen": True
                      }
 
-        self.expected_data = {"id": 1,
-                              "username": "username",
+        self.expected_data = {"username": "username",
                               "email": "test@mail.com",
                               "is_citizen": True
                               }
@@ -49,7 +48,7 @@ class TestRegistrationView(TestCase):
         user = User.objects.get(email=self.data['email'])
         registered_data = UserSerializer(user).data
 
-        assert registered_data == self.expected_data
+        assert self.expected_data.items() <= registered_data.items()
 
     def test_user_signing_up_with_invalid_data_return_bad_request_error(self):
         self.data['email'] = 'not_an_email'

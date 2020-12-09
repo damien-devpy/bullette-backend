@@ -7,7 +7,7 @@ from .serializers import DocumentSerializer, ListDocumentSerializer
 from .permissions import IsAdmin
 
 class CreateDocumentView(generics.CreateAPIView):
-    permission_classes = [IsAdmin,]
+    permission_classes = [IsAdmin, IsAuthenticated]
     queryset = Document.objects.all()
     serializer_class = DocumentSerializer
 

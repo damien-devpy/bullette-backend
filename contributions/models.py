@@ -19,7 +19,7 @@ class Vote(models.Model):
 
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields=['author', 'document'], name='unique_vote')
+            models.UniqueConstraint(fields=['author', 'document'], name='unique_vote'),
         ]
 
     def save(self, *args, **kwargs):
