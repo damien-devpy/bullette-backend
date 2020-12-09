@@ -17,6 +17,17 @@ class Vote(models.Model):
     value = models.ForeignKey('contributions.VoteValue', on_delete=models.PROTECT)
     create_at = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['author', 'document'], name='unique_vote')
+        ]
+
+    def save(self, *args, **kwargs):
+        if self.value not in self.document.votes_values.all():
+            return
+        else:
+            super().save(*args, **kwargs)
+
 
 class VoteValue(models.Model):
     value = models.CharField(max_length=128)

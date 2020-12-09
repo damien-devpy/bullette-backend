@@ -17,6 +17,8 @@ class Document(models.Model):
     votes = models.ManyToManyField('users.User', through='contributions.Vote',
                                    related_name="document_votes")
 
+    votes_values = models.ManyToManyField('contributions.VoteValue')
+
     def __str__(self):
         return self.title
 
