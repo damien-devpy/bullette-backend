@@ -3,11 +3,10 @@ from documents.models import Document
 from users.models import User
 from django.test import TestCase
 from django.db.utils import IntegrityError
-import pdb
 import pytest
 
 class TestVoteModel(TestCase):
-    fixtures = ['documents_and_contributions.json', 'users.json']
+    fixtures = ['documents.json', 'users.json']
 
     def setUp(self):
         self.document = Document.objects.get(title="Pro or Con")

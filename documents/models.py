@@ -6,8 +6,8 @@ class Document(models.Model):
     type = models.ForeignKey('documents.DocumentType', on_delete=models.PROTECT)
     title = models.CharField(max_length=256)
     content = models.TextField()
-    created_at = models.DateField(auto_now_add=True)
-    edit_at = models.DateField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    edit_at = models.DateTimeField(auto_now=True)
     end_at = models.DateField(blank=True, null=True)
     add_vote = models.BooleanField(default=False)
     locked = models.BooleanField(default=False)
@@ -17,7 +17,7 @@ class Document(models.Model):
     votes = models.ManyToManyField('users.User', through='contributions.Vote',
                                    related_name="document_votes")
 
-    votes_values = models.ManyToManyField('contributions.VoteValue')
+    votes_values = models.ManyToManyField('contributions.VoteValue', blank=True)
 
     def __str__(self):
         return self.title

@@ -4,7 +4,6 @@ from django.contrib.auth.hashers import check_password
 from django.test import TestCase
 from rest_framework import serializers
 from rest_framework.serializers import ValidationError
-
 from users.serializers import UserSerializer
 
 
@@ -44,44 +43,35 @@ class TestUserRegistrationSerializer(TestCase):
 
 
 class TestUpdateUserSerializer(TestCase):
+    fixtures = ['users.json']
 
     def setUp(self):
-        existing_user = {'username': 'existing_username',
-                         'email': 'existing@mail.com',
-                         'password': 'password_'
-                        }
+        self.user = get_user_model().objects.first()
+        self.data = UserSerializer(self.user).data
 
-        get_user_model().objects.create_user(**existing_user)
-
-        self.data = {"username": "username",
-                     "email": "test@mail.com",
-                     "password": "p4ssw0rd_",
-                     "password2": "p4ssw0rd_",
-                     }
-
-        serializer = UserSerializer(data=self.data)
-        serializer.is_valid()
-        self.new_user = serializer.save()
+        (self.data['password'],
+         self.data['password2']) = 'a_new_password', 'a_new_password'
 
     def test_update_password_successfully(self):
-        self.data['password'], self.data['password2'] = "a_new_password", "a_new_password"
-        serializer = UserSerializer(self.new_user, self.data)
+        serializer = UserSerializer(self.user, self.data)
         serializer.is_valid()
         update_user = serializer.save()
 
         assert check_password(self.data['password'], update_user.password)
 
     def test_update_other_user_information_successfully(self):
-        self.data['username'] = 'new_username'
-        serializer = UserSerializer(self.new_user, self.data)
+        self.data['username'] = 'a_new_username'
+
+        serializer = UserSerializer(self.user, self.data)
         serializer.is_valid()
         update_user = serializer.save()
 
         assert update_user.username == self.data['username']
 
     def test_user_cannot_update_to_an_email_that_already_exist(self):
-        self.data['email'] = 'existing@mail.com'
-        serializer = UserSerializer(self.new_user, self.data)
+        self.data['email'] = 'username2@mail.com' # Existing email
+
+        serializer = UserSerializer(self.user, self.data)
 
         with pytest.raises(ValidationError) as err:
             serializer.is_valid(raise_exception=True)

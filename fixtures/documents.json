@@ -1,0 +1,98 @@
+[
+    {
+        "model": "documents.document",
+        "pk": 1,
+        "fields": {
+            "author": 5,
+            "type": 1,
+            "title": "Pro or Con",
+            "content": "Pro or Con",
+            "created_at": "2020-12-10T08:07:48.189Z",
+            "edit_at": "2020-12-10T08:07:48.189Z",
+            "end_at": null,
+            "add_vote": true,
+            "locked": false,
+            "votes_values": [
+                3,
+                4
+            ]
+        }
+    },
+    {
+        "model": "documents.document",
+        "pk": 2,
+        "fields": {
+            "author": 5,
+            "type": 1,
+            "title": "Yes or No",
+            "content": "Yes or No",
+            "created_at": "2020-12-10T08:07:59.515Z",
+            "edit_at": "2020-12-10T08:07:59.515Z",
+            "end_at": null,
+            "add_vote": false,
+            "locked": false,
+            "votes_values": [
+                1,
+                2
+            ]
+        }
+    },
+    {
+        "model": "documents.document",
+        "pk": 3,
+        "fields": {
+            "author": 5,
+            "type": 2,
+            "title": "Open to suggestions",
+            "content": "Open to suggestions",
+            "created_at": "2020-12-10T08:08:32.721Z",
+            "edit_at": "2020-12-10T08:08:32.721Z",
+            "end_at": null,
+            "add_vote": false,
+            "locked": false,
+            "votes_values": []
+        }
+    },
+    {
+        "model": "documents.documenttype",
+        "pk": 1,
+        "fields": {
+            "type": "Subject"
+        }
+    },
+    {
+        "model": "documents.documenttype",
+        "pk": 2,
+        "fields": {
+            "type": "Ideas"
+        }
+    },
+    {
+        "model": "contributions.votevalue",
+        "pk": 1,
+        "fields": {
+            "value": "Yes"
+        }
+    },
+    {
+        "model": "contributions.votevalue",
+        "pk": 2,
+        "fields": {
+            "value": "No"
+        }
+    },
+    {
+        "model": "contributions.votevalue",
+        "pk": 3,
+        "fields": {
+            "value": "Pro"
+        }
+    },
+    {
+        "model": "contributions.votevalue",
+        "pk": 4,
+        "fields": {
+            "value": "Con"
+        }
+    }
+]

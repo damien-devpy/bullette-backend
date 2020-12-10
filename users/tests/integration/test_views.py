@@ -35,7 +35,7 @@ class TestRegistrationView(TestCase):
                               }
 
     def test_user_signup_successfully(self):
-        response = self.client.post(self.url, self.data, format='json')
+        response = self.client.post(self.url, self.data)
 
         response_data, status_code = response.data, response.status_code
 
@@ -43,7 +43,7 @@ class TestRegistrationView(TestCase):
         assert 'access' in response_data
 
     def test_user_get_registered_after_signing_up(self):
-        self.client.post(self.url, self.data, format='json')
+        self.client.post(self.url, self.data)
 
         user = User.objects.get(email=self.data['email'])
         registered_data = UserSerializer(user).data
@@ -57,7 +57,7 @@ class TestRegistrationView(TestCase):
         serializer.is_valid()
         expected_data = serializer.errors
 
-        response = self.client.post(self.url, self.data, format='json')
+        response = self.client.post(self.url, self.data)
         response_data, status_code = response.data, response.status_code
 
         assert response_data == expected_data
@@ -70,7 +70,7 @@ class TestRegistrationView(TestCase):
         serializer.is_valid()
         expected_data = serializer.errors
 
-        response = self.client.post(self.url, self.data, format='json')
+        response = self.client.post(self.url, self.data)
         response_data, status_code = response.data, response.status_code
 
         assert response_data == expected_data
@@ -89,7 +89,7 @@ class TestUpdateUserView(TestCase):
 
     def test_that_user_can_update_his_password(self):
         data = {'password': 'a_new_password', 'password2': 'a_new_password'}
-        response = self.client.put(self.url, data=data, format='json')
+        response = self.client.put(self.url, data=data)
 
         status_code = response.status_code
         self.user = get_user_model().objects.first()
@@ -110,7 +110,7 @@ class TestDeleteUserView(TestCase):
         self.client.credentials(HTTP_AUTHORIZATION='Bearer ' + token['access'])
 
     def test_that_user_can_delete_its_own_account(self):
-        response = self.client.delete(self.url, format='json')
+        response = self.client.delete(self.url)
 
         status_code = response.status_code
 
