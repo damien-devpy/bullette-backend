@@ -1,6 +1,12 @@
-from .models import Comment, Vote
+from .models import Comment, Vote, VoteValue
 from rest_framework import serializers
-import pdb
+
+class CreateCommentSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Comment
+        fields = ['content']
+
 class CommentSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -15,8 +21,8 @@ class CommentSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
-class VoteSerializer(serializers.ModelSerializer):
+class CreateVoteSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Vote
-        fields = ['value, document']
+        fields = ['value']

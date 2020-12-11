@@ -1,7 +1,6 @@
 from rest_framework import serializers
 from .models import Document
 from contributions.models import VoteValue
-import pdb
 
 class DocumentSerializer(serializers.ModelSerializer):
 
@@ -15,6 +14,7 @@ class DocumentSerializer(serializers.ModelSerializer):
         extra_kwargs = {'id': {'read_only': True},
                         'created_at': {'read_only': True},
                         'edit_at': {'read_only': True},
+                        'end_at': {'allow_null': True},
                         'comments': {'read_only': True},
                         'votes_values': {'write_only': True},
                         }

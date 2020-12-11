@@ -1,7 +1,7 @@
 from contributions.serializers import CommentSerializer
 from contributions.models import Comment
 from django.test import TestCase
-import pdb
+
 class TestCommentSerializer(TestCase):
     fixtures = ['users.json', 'documents.json', 'contributions.json']
 
@@ -21,7 +21,7 @@ class TestCommentSerializer(TestCase):
 
         assert self.comment.content == data['content']
 
-    def test_that_serializer_do_not_allow_update_of_author_comment(self):
+    def test_that_serializer_do_not_allow_update_of_author_field(self):
         data = {
             'author': 42
         }

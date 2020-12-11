@@ -2,20 +2,11 @@ from documents.models import Document
 from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.shortcuts import reverse
-from rest_framework.test import APIClient
 from rest_framework import status
-from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.test import APIClient
 from documents.serializers import DocumentSerializer
+from config.commons import get_client_with_auth
 import pytest
-import pdb
-
-def get_token_user(user):
-    refresh = RefreshToken.for_user(user)
-    return {
-        "refresh": str(refresh),
-        "access": str(refresh.access_token)
-    }
-
 
 class TestCreateDocumentView(TestCase):
     fixtures = ['documents.json', 'users.json']
@@ -23,9 +14,9 @@ class TestCreateDocumentView(TestCase):
     def setUp(self):
         self.user = get_user_model().objects.get(username='username')
         self.admin = get_user_model().objects.get(username='admin')
-        self.client = APIClient()
         self.url_create_doc = reverse('create-document')
         self.url_list_doc = reverse('list-document')
+        self.unauth_client = APIClient()
         self.data = {
             'type': 1,
             'title': 'Lorem ipsum',
@@ -37,7 +28,7 @@ class TestCreateDocumentView(TestCase):
         }
 
     def test_all_documents_are_displayed(self):
-        response = self.client.get(self.url_list_doc)
+        response = self.unauth_client.get(self.url_list_doc)
 
         response_data, status_code = response.data, response.status_code
 
@@ -45,10 +36,9 @@ class TestCreateDocumentView(TestCase):
         assert len(response_data) == Document.objects.all().count()
 
     def test_admin_user_can_create_a_document(self):
-        token = get_token_user(self.admin)
-        self.client.credentials(HTTP_AUTHORIZATION='Bearer ' + token['access'])
+        client = get_client_with_auth(self.admin)
 
-        response = self.client.post(self.url_create_doc, self.data)
+        response = client.post(self.url_create_doc, self.data)
 
         response_data, status_code = response.data, response.status_code
 
@@ -59,10 +49,9 @@ class TestCreateDocumentView(TestCase):
         assert response_data == expected_data
 
     def test_non_admin_user_cannot_create_document(self):
-        token = get_token_user(self.user)
-        self.client.credentials(HTTP_AUTHORIZATION='Bearer ' + token['access'])
+        client = get_client_with_auth(self.user)
 
-        response = self.client.post(self.url_create_doc, self.data)
+        response = client.post(self.url_create_doc, self.data)
 
         response_data, status_code = response.data, response.status_code
 
@@ -70,7 +59,7 @@ class TestCreateDocumentView(TestCase):
         assert "Vous n'êtes pas autorisé à effectuer cette action" in str(response_data)
 
     def test_unauthentified_user_cannot_create_a_document(self):
-        response = self.client.post(self.url_create_doc, self.data)
+        response = self.unauth_client.post(self.url_create_doc, self.data)
 
         response_data, status_code = response.data, response.status_code
 
@@ -83,11 +72,9 @@ class TestGetUpdateDestroyDocumentView(TestCase):
 
     def setUp(self):
         self.document = Document.objects.first()
-        self.client = APIClient()
-        self.admin = get_user_model().objects.get(username='admin')
-        token = get_token_user(self.admin)
-        self.client.credentials(HTTP_AUTHORIZATION='Bearer ' + token['access'])
         self.url = reverse('get-update-delete-document', args=[self.document.id])
+        self.admin = get_user_model().objects.get(username='admin')
+        self.client = get_client_with_auth(self.admin)
 
     def test_admin_can_delete_document(self):
         response = self.client.delete(self.url)

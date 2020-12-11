@@ -1,0 +1,58 @@
+from django.test import TestCase
+from documents.models import Document
+from config.commons import get_client_with_auth
+from django.shortcuts import reverse
+from django.contrib.auth import get_user_model
+from rest_framework import status
+from rest_framework.test import APIClient
+import pdb
+import pytest
+
+class TestCreateVoteView(TestCase):
+    fixtures = ['users.json', 'documents.json']
+
+    def setUp(self):
+        self.user = get_user_model().objects.first()
+        self.client = get_client_with_auth(self.user)
+        self.document = Document.objects.first()
+        self.value = self.document.votes_values.first()
+        self.url = reverse('create-vote', args=[self.document.id])
+        self.data = {
+            'value': self.value.id
+        }
+
+    # def test_user_can_vote(self):
+    #     pdb.set_trace()
+    #     response = self.client.post(self.url, self.data)
+    #     response_data, status_code = response.data, response.status_code
+
+
+
+
+class TestCreateCommentView(TestCase):
+    fixtures = ['users.json', 'documents.json']
+
+    def setUp(self):
+        self.user = get_user_model().objects.first()
+        self.client = get_client_with_auth(self.user)
+        self.unauth_client = APIClient()
+        self.document = Document.objects.first()
+        self.url = reverse('create-comment', args=[self.document.id])
+        self.data = {
+            'content': 'A new comment.'
+        }
+
+    def test_user_can_comment(self):
+        response = self.client.post(self.url, self.data)
+        response_data, status_code = response.data, response.status_code
+
+        assert status_code == status.HTTP_201_CREATED
+        assert response_data == self.data
+        assert self.document.comments.count() == 1
+
+    def test_unauthenticated_user_cannot_comment(self):
+        response = self.unauth_client.post(self.url, self.data)
+        response_data, status_code = response.data, response.status_code
+
+        assert status_code == status.HTTP_401_UNAUTHORIZED
+        assert "Informations d'authentification non fournies." in str(response_data)

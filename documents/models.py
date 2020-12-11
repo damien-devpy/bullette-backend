@@ -1,5 +1,13 @@
 from django.db import models
 
+class DocumentManager(models.Manager):
+
+    def get_document_by_id(self, pk):
+        return self.get(id=pk)
+
+    def get_all_documents(self):
+        return self.all()
+
 class Document(models.Model):
 
     author = models.ForeignKey('users.User', on_delete=models.SET_NULL, null=True)
@@ -19,8 +27,17 @@ class Document(models.Model):
 
     votes_values = models.ManyToManyField('contributions.VoteValue', blank=True)
 
+    objects = models.Manager()
+    documents = DocumentManager()
+
     def __str__(self):
         return self.title
+
+    def get_votes_details(self):
+        votes = {}
+        for value in self.votes_values.all():
+            votes[value.value] = self.votes.through.objects.filter(value=value).count()
+        return votes
 
 class DocumentType(models.Model):
     type = models.CharField(max_length=128)
