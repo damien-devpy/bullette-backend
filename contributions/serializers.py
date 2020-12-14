@@ -1,18 +1,14 @@
-from .models import Comment, Vote, VoteValue
 from rest_framework import serializers
 
-class CreateCommentSerializer(serializers.ModelSerializer):
+from .models import Comment, Vote
+
+
+class CreateOrUpdateCommentSerializer(serializers.ModelSerializer):
+    """Exposte field for creation of a comment."""
 
     class Meta:
         model = Comment
-        fields = ['content']
-
-class CommentSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Comment
-        fields = '__all__'
-        extra_kwargs = {'author': {'read_only': True}}
+        fields = ["content"]
 
     def update(self, instance, validated_data):
 
@@ -21,8 +17,15 @@ class CommentSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
-class CreateVoteSerializer(serializers.ModelSerializer):
 
+class GetCommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comment
+        fields = "__all__"
+        extra_kwargs = {"author": {"read_only": True}}
+
+
+class CreateVoteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Vote
-        fields = ['value']
+        fields = ["value"]

@@ -6,13 +6,13 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('documents', '0005_auto_20201210_0759'),
+        ("documents", "0005_auto_20201210_0759"),
     ]
 
     operations = [
         migrations.RenameField(
-            model_name='document',
-            old_name='is_locked',
-            new_name='is_locked',
+            model_name="document",
+            old_name="is_locked",
+            new_name="is_locked",
         ),
     ]

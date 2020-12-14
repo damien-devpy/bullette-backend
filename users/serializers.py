@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
-from django.contrib.auth.password_validation import validate_password, ValidationError
+from django.contrib.auth.password_validation import (ValidationError,
+                                                     validate_password)
 from rest_framework import serializers
 
 
@@ -8,7 +9,14 @@ class CreateOrUpdateUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = get_user_model()
-        fields = ['id', 'username', 'email', 'password', 'password2', 'is_citizen']
+        fields = [
+            "id",
+            "username",
+            "email",
+            "password",
+            "password2",
+            "is_citizen",
+        ]
 
     def validate(self, data):
         """
@@ -19,12 +27,13 @@ class CreateOrUpdateUserSerializer(serializers.ModelSerializer):
             data (dict): Validated data.
 
         """
-        if data['password'] != data.pop('password2'):
+        if data["password"] != data.pop("password2"):
             raise serializers.ValidationError(
-                'Les deux mots de passe ne correspondent pas.')
+                "Les deux mots de passe ne correspondent pas."
+            )
 
         try:
-            validate_password(password=data['password'])
+            validate_password(password=data["password"])
         except ValidationError as err:
             raise serializers.ValidationError(err)
 
@@ -46,7 +55,7 @@ class CreateOrUpdateUserSerializer(serializers.ModelSerializer):
             user (User): Model instance.
         """
         for field in validated_data:
-            if field == 'password':
+            if field == "password":
                 instance.set_password(validated_data.get(field))
             else:
                 setattr(instance, field, validated_data.get(field))

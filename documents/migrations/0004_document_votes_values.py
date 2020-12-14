@@ -6,14 +6,14 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('contributions', '0002_auto_20201124_1259'),
-        ('documents', '0003_auto_20201203_0922'),
+        ("contributions", "0002_auto_20201124_1259"),
+        ("documents", "0003_auto_20201203_0922"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='document',
-            name='votes_values',
-            field=models.ManyToManyField(to='contributions.VoteValue'),
+            model_name="document",
+            name="votes_values",
+            field=models.ManyToManyField(to="contributions.VoteValue"),
         ),
     ]
