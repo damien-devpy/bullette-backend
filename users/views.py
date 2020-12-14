@@ -1,5 +1,5 @@
 from rest_framework.views import APIView
-from .serializers import UserSerializer
+from .serializers import CreateOrUpdateUserSerializer
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
@@ -7,9 +7,10 @@ from django.contrib.auth import get_user_model
 from config.commons import get_tokens
 
 class RegistrationView(APIView):
+    """Allow user to signup to the plateform."""
 
     def post(self, request):
-        serializer = UserSerializer(data=request.data)
+        serializer = CreateOrUpdateUserSerializer(data=request.data)
 
         if serializer.is_valid():
             user = serializer.save()
@@ -22,16 +23,20 @@ class RegistrationView(APIView):
 
 
 class UpdateUserView(APIView):
+    """Allow user to update his own information."""
+
     permission_classes = [IsAuthenticated,]
 
-    def put(self, request):
-        serializer = UserSerializer(instance=request.user, data=request.data, partial=True)
+    def patch(self, request):
+        serializer = CreateOrUpdateUserSerializer(instance=request.user, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(status=status.HTTP_204_NO_CONTENT)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class DeleteUserView(APIView):
+    """Allow user to delete his own account."""
+
     permission_classes = [IsAuthenticated,]
 
     def delete(self, request):

@@ -4,7 +4,7 @@ from django.contrib.auth.hashers import check_password
 from django.test import TestCase
 from rest_framework import serializers
 from rest_framework.serializers import ValidationError
-from users.serializers import UserSerializer
+from users.serializers import CreateOrUpdateUserSerializer
 
 
 class TestUserRegistrationSerializer(TestCase):
@@ -18,7 +18,7 @@ class TestUserRegistrationSerializer(TestCase):
 
     def test_serializer_given_different_password_raise_validation_error(self):
         self.data['password2'] = 'a_different_password'
-        serializer = UserSerializer(data=self.data)
+        serializer = CreateOrUpdateUserSerializer(data=self.data)
 
         with pytest.raises(serializers.ValidationError) as err:
             serializer.is_valid(raise_exception=True)
@@ -27,7 +27,7 @@ class TestUserRegistrationSerializer(TestCase):
 
     def test_serializer_given_too_common_password_raise_validation_error(self):
         self.data['password'], self.data['password2'] = 'password', 'password'
-        serializer = UserSerializer(data=self.data)
+        serializer = CreateOrUpdateUserSerializer(data=self.data)
 
         with pytest.raises(serializers.ValidationError) as err:
             serializer.is_valid(raise_exception=True)
@@ -35,7 +35,7 @@ class TestUserRegistrationSerializer(TestCase):
         assert 'Ce mot de passe est trop courant' in str(err.value)
 
     def test_serializer_effectively_hash_password(self):
-        serializer = UserSerializer(data=self.data)
+        serializer = CreateOrUpdateUserSerializer(data=self.data)
         serializer.is_valid()
         new_user = serializer.save()
 
@@ -47,13 +47,13 @@ class TestUpdateUserSerializer(TestCase):
 
     def setUp(self):
         self.user = get_user_model().objects.first()
-        self.data = UserSerializer(self.user).data
+        self.data = CreateOrUpdateUserSerializer(self.user).data
 
         (self.data['password'],
          self.data['password2']) = 'a_new_password', 'a_new_password'
 
     def test_update_password_successfully(self):
-        serializer = UserSerializer(self.user, self.data)
+        serializer = CreateOrUpdateUserSerializer(self.user, self.data)
         serializer.is_valid()
         update_user = serializer.save()
 
@@ -62,7 +62,7 @@ class TestUpdateUserSerializer(TestCase):
     def test_update_other_user_information_successfully(self):
         self.data['username'] = 'a_new_username'
 
-        serializer = UserSerializer(self.user, self.data)
+        serializer = CreateOrUpdateUserSerializer(self.user, self.data)
         serializer.is_valid()
         update_user = serializer.save()
 
@@ -71,7 +71,7 @@ class TestUpdateUserSerializer(TestCase):
     def test_user_cannot_update_to_an_email_that_already_exist(self):
         self.data['email'] = 'username2@mail.com' # Existing email
 
-        serializer = UserSerializer(self.user, self.data)
+        serializer = CreateOrUpdateUserSerializer(self.user, self.data)
 
         with pytest.raises(ValidationError) as err:
             serializer.is_valid(raise_exception=True)

@@ -3,7 +3,7 @@ from rest_framework.test import APIClient
 from django.shortcuts import reverse
 from django.contrib.auth import get_user_model
 from users.models import User
-from users.serializers import UserSerializer
+from users.serializers import CreateOrUpdateUserSerializer
 from django.contrib.auth.hashers import check_password
 from rest_framework import status
 from config.commons import get_tokens
@@ -39,14 +39,14 @@ class TestRegistrationView(TestCase):
         self.client.post(self.url, self.data)
 
         user = User.objects.get(email=self.data['email'])
-        registered_data = UserSerializer(user).data
+        registered_data = CreateOrUpdateUserSerializer(user).data
 
         assert self.expected_data.items() <= registered_data.items()
 
     def test_user_signing_up_with_invalid_data_return_bad_request_error(self):
         self.data['email'] = 'not_an_email'
 
-        serializer = UserSerializer(data=self.data)
+        serializer = CreateOrUpdateUserSerializer(data=self.data)
         serializer.is_valid()
         expected_data = serializer.errors
 
@@ -59,7 +59,7 @@ class TestRegistrationView(TestCase):
     def test_user_signing_up_with_invalid_data_return_bad_request_error2(self):
         self.data['password2'] = 'a_different_password'
 
-        serializer = UserSerializer(data=self.data)
+        serializer = CreateOrUpdateUserSerializer(data=self.data)
         serializer.is_valid()
         expected_data = serializer.errors
 
@@ -79,7 +79,7 @@ class TestUpdateUserView(TestCase):
 
     def test_that_user_can_update_his_password(self):
         data = {'password': 'a_new_password', 'password2': 'a_new_password'}
-        response = self.client.put(self.url, data=data)
+        response = self.client.patch(self.url, data=data)
 
         status_code = response.status_code
         self.user = get_user_model().objects.first()

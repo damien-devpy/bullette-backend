@@ -7,7 +7,7 @@ import pdb
 
 
 class CreateCommentView(generics.CreateAPIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated,]
     queryset = Comment.objects.all()
     serializer_class = CreateCommentSerializer
 
@@ -18,6 +18,7 @@ class CreateCommentView(generics.CreateAPIView):
                         )
 
 class CreateVoteView(generics.CreateAPIView):
+    permission_classes = [IsAuthenticated,]
     queryset = Vote.objects.all()
     serializer_class = CreateVoteSerializer
 

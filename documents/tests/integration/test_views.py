@@ -4,9 +4,10 @@ from django.test import TestCase
 from django.shortcuts import reverse
 from rest_framework import status
 from rest_framework.test import APIClient
-from documents.serializers import DocumentSerializer
+from documents.serializers import GetDetailDocumentSerializer, CreateOrUpdateDocumentSerializer
 from config.commons import get_client_with_auth
 import pytest
+import pdb
 
 class TestCreateDocumentView(TestCase):
     fixtures = ['documents.json', 'users.json']
@@ -23,7 +24,7 @@ class TestCreateDocumentView(TestCase):
             'content': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
             'end_at': None,
             'add_vote': True,
-            'locked': False,
+            'is_locked': False,
             'votes_values': ['Yes', 'No']
         }
 
@@ -43,7 +44,7 @@ class TestCreateDocumentView(TestCase):
         response_data, status_code = response.data, response.status_code
 
         document = Document.objects.get(title=self.data['title'])
-        expected_data = DocumentSerializer(document).data
+        expected_data = CreateOrUpdateDocumentSerializer(document).data
 
         assert status_code == status.HTTP_201_CREATED
         assert response_data == expected_data
@@ -103,5 +104,5 @@ class TestGetUpdateDestroyDocumentView(TestCase):
         response_data, status_code = response.data, response.status_code
 
         assert status_code == status.HTTP_200_OK
-        assert response_data == DocumentSerializer(self.document).data
+        assert response_data == GetDetailDocumentSerializer(self.document).data
 

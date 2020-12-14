@@ -21,12 +21,20 @@ class TestCreateVoteView(TestCase):
             'value': self.value.id
         }
 
-    # def test_user_can_vote(self):
-    #     pdb.set_trace()
-    #     response = self.client.post(self.url, self.data)
-    #     response_data, status_code = response.data, response.status_code
+    def test_user_can_vote(self):
+        response = self.client.post(self.url, self.data)
+        response_data, status_code = response.data, response.status_code
 
+        assert status_code == status.HTTP_201_CREATED
+        assert response_data == self.data
 
+    def test_unauthenticated_user_cannot_vote(self):
+        self.client.credentials()
+        response = self.client.post(self.url, self.data)
+        response_data, status_code = response.data, response.status_code
+
+        assert status_code == status.HTTP_401_UNAUTHORIZED
+        assert "Informations d'authentification non fournies." in str(response_data)
 
 
 class TestCreateCommentView(TestCase):
@@ -48,7 +56,6 @@ class TestCreateCommentView(TestCase):
 
         assert status_code == status.HTTP_201_CREATED
         assert response_data == self.data
-        assert self.document.comments.count() == 1
 
     def test_unauthenticated_user_cannot_comment(self):
         response = self.unauth_client.post(self.url, self.data)

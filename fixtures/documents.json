@@ -11,7 +11,7 @@
             "edit_at": "2020-12-10T08:07:48.189Z",
             "end_at": null,
             "add_vote": true,
-            "locked": false,
+            "is_locked": false,
             "votes_values": [
                 3,
                 4
@@ -30,7 +30,7 @@
             "edit_at": "2020-12-10T08:07:59.515Z",
             "end_at": null,
             "add_vote": false,
-            "locked": false,
+            "is_locked": false,
             "votes_values": [
                 1,
                 2
@@ -49,7 +49,7 @@
             "edit_at": "2020-12-10T08:08:32.721Z",
             "end_at": null,
             "add_vote": false,
-            "locked": false,
+            "is_locked": false,
             "votes_values": []
         }
     },
