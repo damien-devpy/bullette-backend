@@ -11,8 +11,8 @@
       "is_staff": false,
       "is_active": true,
       "date_joined": "2020-12-02T09:45:28.782Z",
-      "username": "username1",
-      "email": "username1@testmail.com",
+      "username": "username",
+      "email": "username@mail.com",
       "is_citizen": false,
       "groups": [],
       "user_permissions": []
@@ -31,7 +31,7 @@
       "is_active": true,
       "date_joined": "2020-12-02T09:45:28.917Z",
       "username": "username2",
-      "email": "username2@testmail.com",
+      "email": "username2@mail.com",
       "is_citizen": false,
       "groups": [],
       "user_permissions": []
@@ -50,7 +50,7 @@
       "is_active": true,
       "date_joined": "2020-12-02T09:45:29.043Z",
       "username": "username3",
-      "email": "username3@testmail.com",
+      "email": "username3@mail.com",
       "is_citizen": false,
       "groups": [],
       "user_permissions": []
@@ -69,7 +69,26 @@
       "is_active": true,
       "date_joined": "2020-12-02T09:45:29.166Z",
       "username": "username4",
-      "email": "username4@testmail.com",
+      "email": "username4@mail.com",
+      "is_citizen": false,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 5,
+    "fields": {
+      "password": "pbkdf2_sha256$216000$R2cobKRFmUXV$VhGMkmVZx+y0NFTBAEcKjMIsTGdZMp70VwWLbC8zkPw=",
+      "last_login": null,
+      "is_superuser": true,
+      "first_name": "",
+      "last_name": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2020-12-02T09:45:29.166Z",
+      "username": "admin",
+      "email": "admin@mail.com",
       "is_citizen": false,
       "groups": [],
       "user_permissions": []

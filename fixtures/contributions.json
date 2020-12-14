@@ -1,0 +1,104 @@
+[
+  {
+    "model": "contributions.vote",
+    "pk": 1,
+    "fields": {
+      "author": 5,
+      "document": 1,
+      "value": 3,
+      "created_at": "2020-12-10T11:44:26.862Z"
+    }
+  },
+  {
+    "model": "contributions.vote",
+    "pk": 2,
+    "fields": {
+      "author": 1,
+      "document": 1,
+      "value": 3,
+      "created_at": "2020-12-10T11:44:37.727Z"
+    }
+  },
+  {
+    "model": "contributions.vote",
+    "pk": 3,
+    "fields": {
+      "author": 2,
+      "document": 2,
+      "value": 2,
+      "created_at": "2020-12-10T11:44:46.060Z"
+    }
+  },
+  {
+    "model": "contributions.vote",
+    "pk": 4,
+    "fields": {
+      "author": 3,
+      "document": 2,
+      "value": 2,
+      "created_at": "2020-12-10T11:44:54.455Z"
+    }
+  },
+  {
+    "model": "contributions.votevalue",
+    "pk": 1,
+    "fields": {
+      "value": "Yes"
+    }
+  },
+  {
+    "model": "contributions.votevalue",
+    "pk": 2,
+    "fields": {
+      "value": "No"
+    }
+  },
+  {
+    "model": "contributions.votevalue",
+    "pk": 3,
+    "fields": {
+      "value": "Pro"
+    }
+  },
+  {
+    "model": "contributions.votevalue",
+    "pk": 4,
+    "fields": {
+      "value": "Con"
+    }
+  },  {
+    "model": "contributions.comment",
+    "pk": 1,
+    "fields": {
+      "author": 1,
+      "document": 1,
+      "content": "A comment.",
+      "created_at": "2020-12-10T12:06:14.334Z",
+      "edit_at": "2020-12-10T00:00:00Z"
+    }
+  },
+  {
+    "model": "contributions.comment",
+    "pk": 2,
+    "fields": {
+      "author": 2,
+      "document": 2,
+      "content": "Another comment.",
+      "created_at": "2020-12-10T12:06:23.496Z",
+      "edit_at": "2020-12-10T00:00:00Z"
+    }
+  },
+  {
+    "model": "contributions.comment",
+    "pk": 3,
+    "fields": {
+      "author": 1,
+      "document": 1,
+      "content": "Coucou",
+      "created_at": "2020-12-10T14:13:45.610Z",
+      "edit_at": "2020-12-10T00:00:00Z"
+    }
+  }
+]
+
+

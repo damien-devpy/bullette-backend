@@ -5,7 +5,13 @@ from django.utils.translation import gettext_lazy as _
 
 
 class User(AbstractUser):
+    """Custom user model.
 
+    Attributes:
+        username (string)
+        email (string)
+        is_citizen (bool): Is user a citizen of the city using plateform.
+    """
     username = models.CharField(_('Nom d\'utilisateur'),
                                 max_length=128,
                                 validators=[UnicodeUsernameValidator()])
@@ -13,7 +19,6 @@ class User(AbstractUser):
                               max_length=256,
                               unique=True)
 
-    # Is User a citizen of this town
     is_citizen = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'email'

@@ -1,14 +1,27 @@
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
-from rest_framework import status
+from rest_framework import generics
 from .models import Document
-from .serializers import DocumentSerializer
+from .serializers import CreateOrUpdateDocumentSerializer, GetDocumentSerializer, GetDetailDocumentSerializer
+from .permissions import IsAdminOrReadOnly
+import pdb
 
-class DocumentListView(APIView):
-    permission_classes = [IsAuthenticated,]
+class ListDocumentView(generics.ListAPIView):
+    queryset = Document.objects.all()
+    serializer_class = GetDocumentSerializer
 
-    def get(self, request):
-        documents = Document.objects.all()
-        serializer = DocumentSerializer(documents, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+class GetUpdateDeleteDocumentView(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [IsAdminOrReadOnly]
+    queryset = Document.objects.all()
+
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return GetDetailDocumentSerializer
+        return CreateOrUpdateDocumentSerializer
+
+class CreateDocumentView(generics.CreateAPIView):
+    permission_classes = [IsAdminOrReadOnly]
+    queryset = Document.objects.all()
+    serializer_class = CreateOrUpdateDocumentSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)
+

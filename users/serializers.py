@@ -3,18 +3,21 @@ from django.contrib.auth.password_validation import validate_password, Validatio
 from rest_framework import serializers
 
 
-class UserSerializer(serializers.ModelSerializer):
+class CreateOrUpdateUserSerializer(serializers.ModelSerializer):
     password2 = serializers.CharField(max_length=128, write_only=True)
 
     class Meta:
         model = get_user_model()
         fields = ['id', 'username', 'email', 'password', 'password2', 'is_citizen']
-        extra_kwargs = {'password': {'write_only': True}}
 
     def validate(self, data):
         """
         Custom validation.
         Make sure that passwords matches and syntax is sufficient secure.
+
+        Returns:
+            data (dict): Validated data.
+
         """
         if data['password'] != data.pop('password2'):
             raise serializers.ValidationError(
@@ -28,10 +31,20 @@ class UserSerializer(serializers.ModelSerializer):
         return data
 
     def create(self, validated_data):
+        """Create user with validated data.
+
+        Returns:
+            user (User): Model instance.
+        """
         user = get_user_model().objects.create_user(**validated_data)
         return user
 
     def update(self, instance, validated_data):
+        """Update user information with validated data.
+
+        Returns:
+            user (User): Model instance.
+        """
         for field in validated_data:
             if field == 'password':
                 instance.set_password(validated_data.get(field))
