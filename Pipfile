@@ -12,6 +12,7 @@ djangorestframework = "*"
 [dev-packages]
 pytest = "*"
 pytest-django = "*"
+coverage = "*"
 
 [requires]
 python_version = "3.8"

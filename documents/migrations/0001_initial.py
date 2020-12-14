@@ -21,7 +21,7 @@ class Migration(migrations.Migration):
                 ('changed_at', models.DateField(auto_now=True)),
                 ('end_at', models.DateField(blank=True, null=True)),
                 ('add_vote', models.BooleanField(default=False)),
-                ('locked', models.BooleanField(default=False)),
+                ('is_locked', models.BooleanField(default=False)),
             ],
         ),
         migrations.CreateModel(
