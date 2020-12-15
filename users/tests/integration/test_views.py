@@ -90,6 +90,15 @@ class TestUpdateUserView(TestCase):
         assert check_password(data["password"], self.user.password)
         assert status_code == status.HTTP_204_NO_CONTENT
 
+    def test_that_user_can_update_other_informations(self):
+        data = {"username": "a_new_username"}
+        response = self.client.patch(self.url, data=data)
+
+        status_code = response.status_code
+        self.user.refresh_from_db()
+        assert self.user.username == data["username"]
+        assert status_code == status.HTTP_204_NO_CONTENT
+
 
 class TestDeleteUserView(TestCase):
     fixtures = ["users.json"]

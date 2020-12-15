@@ -23,19 +23,24 @@ class CreateOrUpdateUserSerializer(serializers.ModelSerializer):
         Custom validation.
         Make sure that passwords matches and syntax is sufficient secure.
 
+        Args:
+            data (dict): Data to validate
+
         Returns:
             data (dict): Validated data.
 
         """
-        if data["password"] != data.pop("password2"):
-            raise serializers.ValidationError(
-                "Les deux mots de passe ne correspondent pas."
-            )
+        if "password" in data:
 
-        try:
-            validate_password(password=data["password"])
-        except ValidationError as err:
-            raise serializers.ValidationError(err)
+            if data["password"] != data.pop("password2"):
+                raise serializers.ValidationError(
+                    "Les deux mots de passe ne correspondent pas."
+                )
+
+            try:
+                validate_password(password=data["password"])
+            except ValidationError as err:
+                raise serializers.ValidationError(err)
 
         return data
 

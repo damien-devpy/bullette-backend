@@ -6,7 +6,7 @@ from .models import Document
 
 
 class CreateOrUpdateDocumentSerializer(serializers.ModelSerializer):
-    """Exposte field of a document for creation or update."""
+    """Expose field of a document for creation or update."""
 
     class Meta:
         model = Document

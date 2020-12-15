@@ -3,7 +3,8 @@ from unittest.mock import patch
 from django.test import TestCase
 
 from documents.models import Document
-from documents.serializers import GetDocumentSerializer
+from documents.serializers import (CreateOrUpdateDocumentSerializer,
+                                   GetDocumentSerializer)
 
 
 class TestGetDocumentSerializer(TestCase):
@@ -32,3 +33,20 @@ class TestGetDocumentSerializer(TestCase):
             "documents.models.Document.get_comments_count", return_value=0
         ):
             assert serializer.data["comments_count"] == 0
+
+
+class TestCreateOrUpdateDocumentSerializer(TestCase):
+    fixtures = ["users.json", "documents.json"]
+
+    def setUp(self):
+        self.document = Document.objects.first()
+
+    def test_that_serializer_allow_update_document_instance(self):
+        data = {"title": "All new title."}
+        serializer = CreateOrUpdateDocumentSerializer(
+            self.document, data, partial=True
+        )
+        serializer.is_valid()
+        serializer.save()
+
+        assert self.document.title == data["title"]
