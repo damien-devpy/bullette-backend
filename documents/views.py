@@ -2,8 +2,11 @@ from rest_framework import generics
 
 from .models import Document
 from .permissions import IsAdminOrReadOnly
-from .serializers import (CreateOrUpdateDocumentSerializer,
-                          GetDetailDocumentSerializer, GetDocumentSerializer)
+from .serializers import (
+    CreateOrUpdateDocumentSerializer,
+    GetDetailDocumentSerializer,
+    GetDocumentSerializer,
+)
 
 
 class ListDocumentView(generics.ListAPIView):

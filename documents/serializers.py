@@ -1,6 +1,11 @@
+import pdb
+
 from rest_framework import serializers
 
-from contributions.serializers import GetCommentSerializer
+from contributions.serializers import (
+    GetCommentSerializer,
+    GetVotesDetailsSerializer,
+)
 
 from .models import Document
 
@@ -35,7 +40,7 @@ class CreateOrUpdateDocumentSerializer(serializers.ModelSerializer):
 class GetDocumentSerializer(serializers.ModelSerializer):
     """Expose fields of a document.
 
-    This serializer is intent to be used to list severals documents.
+    This serializer is intent to be used to list several documents.
     For exposing more details about documents, GetDetailDocumentSerializer should be used.
     """
 
@@ -58,12 +63,9 @@ class GetDocumentSerializer(serializers.ModelSerializer):
         ]
 
     def get_votes_details(self, obj):
-        votes_details = {}
-        for value in obj.get_votes_values():
-            votes_details.update(
-                {value.value: obj.get_votes_details(value.id)}
-            )
-        return votes_details
+        return GetVotesDetailsSerializer(
+            obj.get_votes_values(), context={"parent_obj": obj}, many=True
+        ).data
 
     def get_comments_count(self, obj):
         return obj.get_comments_count()

@@ -1,7 +1,10 @@
 from django.urls import path
 
-from .views import (CreateDocumentView, GetUpdateDeleteDocumentView,
-                    ListDocumentView)
+from .views import (
+    CreateDocumentView,
+    GetUpdateDeleteDocumentView,
+    ListDocumentView,
+)
 
 urlpatterns = [
     path("", ListDocumentView.as_view(), name="list-document"),

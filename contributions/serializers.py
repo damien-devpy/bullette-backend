@@ -1,10 +1,10 @@
 from rest_framework import serializers
 
-from .models import Comment, Vote
+from .models import Comment, Vote, VoteValue
 
 
 class CreateOrUpdateCommentSerializer(serializers.ModelSerializer):
-    """Exposte field for creation of a comment."""
+    """Expose field for creation or update of a comment."""
 
     class Meta:
         model = Comment
@@ -29,3 +29,23 @@ class CreateVoteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Vote
         fields = ["value"]
+
+
+class GetVotesDetailsSerializer(serializers.ModelSerializer):
+    """Expose votes details about this document.
+
+    Attributes:
+        id (int): id of the vote value
+        value (str): string value
+        count (int): How many vote for this value
+    """
+
+    count = serializers.SerializerMethodField()
+
+    class Meta:
+        model = VoteValue
+        fields = ["id", "value", "count"]
+
+    def get_count(self, obj):
+        """Count how many votes for the current value exist in the parent object (document)."""
+        return self.context["parent_obj"].get_votes_details(obj.id)

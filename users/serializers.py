@@ -1,6 +1,8 @@
 from django.contrib.auth import get_user_model
-from django.contrib.auth.password_validation import (ValidationError,
-                                                     validate_password)
+from django.contrib.auth.password_validation import (
+    ValidationError,
+    validate_password,
+)
 from rest_framework import serializers
 
 

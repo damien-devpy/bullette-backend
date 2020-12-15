@@ -7,8 +7,10 @@ from rest_framework.test import APIClient
 
 from config.commons import get_client_with_auth
 from documents.models import Document
-from documents.serializers import (CreateOrUpdateDocumentSerializer,
-                                   GetDetailDocumentSerializer)
+from documents.serializers import (
+    CreateOrUpdateDocumentSerializer,
+    GetDetailDocumentSerializer,
+)
 
 
 class TestCreateDocumentView(TestCase):
