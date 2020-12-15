@@ -1,7 +1,7 @@
 from django.db import models
 
-class DocumentManager(models.Manager):
 
+class DocumentManager(models.Manager):
     def get_document_by_id(self, pk):
         """Get a specific document by id.
 
@@ -17,6 +17,7 @@ class DocumentManager(models.Manager):
             Queryset containing all documents.
         """
         return self.all()
+
 
 class Document(models.Model):
     """Document model.
@@ -38,8 +39,12 @@ class Document(models.Model):
         votes_values (VoteValue): All possible votes values for this document.
     """
 
-    author = models.ForeignKey('users.User', on_delete=models.SET_NULL, null=True)
-    type = models.ForeignKey('documents.DocumentType', on_delete=models.PROTECT)
+    author = models.ForeignKey(
+        "users.User", on_delete=models.SET_NULL, null=True
+    )
+    type = models.ForeignKey(
+        "documents.DocumentType", on_delete=models.PROTECT
+    )
     title = models.CharField(max_length=256)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
@@ -48,12 +53,20 @@ class Document(models.Model):
     add_vote = models.BooleanField(default=False)
     is_locked = models.BooleanField(default=False)
 
-    comments = models.ManyToManyField('users.User', through='contributions.Comment',
-                                      related_name="document_comments")
-    votes = models.ManyToManyField('users.User', through='contributions.Vote',
-                                   related_name="document_votes")
+    comments = models.ManyToManyField(
+        "users.User",
+        through="contributions.Comment",
+        related_name="document_comments",
+    )
+    votes = models.ManyToManyField(
+        "users.User",
+        through="contributions.Vote",
+        related_name="document_votes",
+    )
 
-    votes_values = models.ManyToManyField('contributions.VoteValue', blank=True)
+    votes_values = models.ManyToManyField(
+        "contributions.VoteValue", blank=True
+    )
 
     objects = models.Manager()
     documents = DocumentManager()
@@ -80,8 +93,9 @@ class Document(models.Model):
             Count for how many votes for this document regarding the value.
         """
 
-        return self.votes.through.objects.filter(document__id=self.id, value=value).count()
-
+        return self.votes.through.objects.filter(
+            document__id=self.id, value=value
+        ).count()
 
     def get_comments(self):
         """Get all comments for this document.
@@ -101,11 +115,12 @@ class Document(models.Model):
 
         return self.get_comments().count()
 
+
 class DocumentType(models.Model):
     type = models.CharField(max_length=128)
 
     class Meta:
-        verbose_name = 'Types de document'
+        verbose_name = "Types de document"
 
     def __str__(self):
         return self.type

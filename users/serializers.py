@@ -1,5 +1,8 @@
 from django.contrib.auth import get_user_model
-from django.contrib.auth.password_validation import validate_password, ValidationError
+from django.contrib.auth.password_validation import (
+    ValidationError,
+    validate_password,
+)
 from rest_framework import serializers
 
 
@@ -8,25 +11,38 @@ class CreateOrUpdateUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = get_user_model()
-        fields = ['id', 'username', 'email', 'password', 'password2', 'is_citizen']
+        fields = [
+            "id",
+            "username",
+            "email",
+            "password",
+            "password2",
+            "is_citizen",
+        ]
 
     def validate(self, data):
         """
         Custom validation.
         Make sure that passwords matches and syntax is sufficient secure.
 
+        Args:
+            data (dict): Data to validate
+
         Returns:
             data (dict): Validated data.
 
         """
-        if data['password'] != data.pop('password2'):
-            raise serializers.ValidationError(
-                'Les deux mots de passe ne correspondent pas.')
+        if "password" in data:
 
-        try:
-            validate_password(password=data['password'])
-        except ValidationError as err:
-            raise serializers.ValidationError(err)
+            if data["password"] != data.pop("password2"):
+                raise serializers.ValidationError(
+                    "Les deux mots de passe ne correspondent pas."
+                )
+
+            try:
+                validate_password(password=data["password"])
+            except ValidationError as err:
+                raise serializers.ValidationError(err)
 
         return data
 
@@ -46,7 +62,7 @@ class CreateOrUpdateUserSerializer(serializers.ModelSerializer):
             user (User): Model instance.
         """
         for field in validated_data:
-            if field == 'password':
+            if field == "password":
                 instance.set_password(validated_data.get(field))
             else:
                 setattr(instance, field, validated_data.get(field))
