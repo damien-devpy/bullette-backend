@@ -4,7 +4,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from config.commons import get_tokens
+from config.utils import get_tokens
 
 from .serializers import CreateOrUpdateUserSerializer
 

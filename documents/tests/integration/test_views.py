@@ -5,7 +5,7 @@ from django.test import TestCase
 from rest_framework import status
 from rest_framework.test import APIClient
 
-from config.commons import get_client_with_auth
+from config.utils import get_client_with_auth
 from documents.models import Document
 from documents.serializers import (
     CreateOrUpdateDocumentSerializer,
