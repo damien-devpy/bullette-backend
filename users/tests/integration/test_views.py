@@ -6,7 +6,7 @@ from django.test import TestCase
 from rest_framework import status
 from rest_framework.test import APIClient
 
-from config.commons import get_client_with_auth
+from config.utils import get_client_with_auth
 from users.models import User
 from users.serializers import CreateOrUpdateUserSerializer
 

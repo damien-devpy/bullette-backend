@@ -1,5 +1,3 @@
-import pdb
-
 from rest_framework import serializers
 
 from contributions.serializers import (
