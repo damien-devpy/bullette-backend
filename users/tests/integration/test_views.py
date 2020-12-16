@@ -76,7 +76,7 @@ class TestUpdateUserView(TestCase):
     fixtures = ["users.json"]
 
     def setUp(self):
-        self.url = reverse("update-password")
+        self.url = reverse("update-user")
         self.user = get_user_model().objects.first()
         self.client = get_client_with_auth(self.user)
 
