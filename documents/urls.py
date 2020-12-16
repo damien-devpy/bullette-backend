@@ -14,7 +14,7 @@ urlpatterns = [
         name="create-document",
     ),
     path(
-        "documents/<int:pk>",
+        "documents/<int:pk>/",
         GetUpdateDeleteDocumentView.as_view(),
         name="get-update-delete-document",
     ),
