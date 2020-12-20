@@ -1,6 +1,6 @@
 from rest_framework import generics
 
-from documents.models import Document
+from api.documents.models import Document
 
 from .models import Comment, Vote
 from .permissions import IsAuthenticated

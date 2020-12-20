@@ -4,8 +4,8 @@ from django.test import TestCase
 from rest_framework import status
 from rest_framework.test import APIClient
 
+from api.documents.models import Document
 from config.utils import get_client_with_auth
-from documents.models import Document
 
 
 class TestCreateVoteView(TestCase):
