@@ -10,7 +10,7 @@ def mock_post(*args, **kwargs):
 
 @pytest.fixture
 def mocking_post_registration_view(monkeypatch):
-    monkeypatch.setattr("users.views.RegistrationView.post", mock_post)
+    monkeypatch.setattr("api.users.views.RegistrationView.post", mock_post)
 
 
 def test_that_exception_handler_properly_manage_500_error(

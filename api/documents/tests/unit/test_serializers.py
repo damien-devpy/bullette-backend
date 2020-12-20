@@ -2,8 +2,8 @@ from unittest.mock import patch
 
 from django.test import TestCase
 
-from documents.models import Document
-from documents.serializers import (
+from api.documents.models import Document
+from api.documents.serializers import (
     CreateOrUpdateDocumentSerializer,
     GetDocumentSerializer,
 )
@@ -19,11 +19,11 @@ class TestGetDocumentSerializer(TestCase):
         serializer = GetDocumentSerializer(self.document)
 
         with patch(
-            "documents.models.Document.get_votes_values",
+            "api.documents.models.Document.get_votes_values",
             return_value=self.document.votes_values.all(),
         ):
             with patch(
-                "documents.models.Document.get_votes_details",
+                "api.documents.models.Document.get_votes_details",
                 side_effect=[0, 0],
             ):
                 for detail in serializer.data["votes_details"]:
@@ -33,7 +33,7 @@ class TestGetDocumentSerializer(TestCase):
         serializer = GetDocumentSerializer(self.document)
 
         with patch(
-            "documents.models.Document.get_comments_count", return_value=0
+            "api.documents.models.Document.get_comments_count", return_value=0
         ):
             assert serializer.data["comments_count"] == 0
 

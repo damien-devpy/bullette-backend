@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from contributions.serializers import (
+from api.contributions.serializers import (
     GetCommentSerializer,
     GetVotesDetailsSerializer,
 )

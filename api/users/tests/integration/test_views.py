@@ -6,9 +6,9 @@ from django.test import TestCase
 from rest_framework import status
 from rest_framework.test import APIClient
 
+from api.users.models import User
+from api.users.serializers import CreateOrUpdateUserSerializer
 from config.utils import get_client_with_auth
-from users.models import User
-from users.serializers import CreateOrUpdateUserSerializer
 
 
 class TestRegistrationView(TestCase):

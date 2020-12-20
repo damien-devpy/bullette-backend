@@ -2,9 +2,9 @@ import pytest
 from django.db.utils import IntegrityError
 from django.test import TestCase
 
-from contributions.models import Vote, VoteValue
-from documents.models import Document
-from users.models import User
+from api.contributions.models import Vote, VoteValue
+from api.documents.models import Document
+from api.users.models import User
 
 
 class TestVoteModel(TestCase):

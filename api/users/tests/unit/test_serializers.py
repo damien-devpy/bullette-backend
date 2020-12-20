@@ -5,7 +5,7 @@ from django.test import TestCase
 from rest_framework import serializers
 from rest_framework.serializers import ValidationError
 
-from users.serializers import CreateOrUpdateUserSerializer
+from api.users.serializers import CreateOrUpdateUserSerializer
 
 
 class TestUserRegistrationSerializer(TestCase):

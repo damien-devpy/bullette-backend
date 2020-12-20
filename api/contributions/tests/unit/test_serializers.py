@@ -1,7 +1,7 @@
 from django.test import TestCase
 
-from contributions.models import Comment
-from contributions.serializers import GetCommentSerializer
+from api.contributions.models import Comment
+from api.contributions.serializers import GetCommentSerializer
 
 
 class TestCommentSerializer(TestCase):
