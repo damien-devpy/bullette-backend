@@ -36,7 +36,7 @@ jobs:
         run: |
           pip install pipenv
           pipenv install --dev
-
+          
       - name: pre-commit
         run: pipenv run pre-commit run --all-files
 
