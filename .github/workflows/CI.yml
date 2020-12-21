@@ -38,7 +38,7 @@ jobs:
           pipenv install --dev
           
       - name: pre-commit
-        run: pipenv run pre-commit --all-files
-        
+        run: pipenv run pre-commit run --all-files
+
       - name: Running tests
         run: pipenv run pytest
